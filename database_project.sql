@@ -64,3 +64,25 @@ INSERT INTO Orders VALUES (4, 3, 4, 1, DATE '2026-11-10');
 INSERT INTO Orders VALUES (5, 4, 5, 2, DATE '2026-11-12');
 INSERT INTO Orders VALUES (6, 5, 3, 1, DATE '2026-11-13');
 SELECT * FROM Orders;
+
+/* Shipments جدول ال */
+CREATE TABLE Shipments (
+    shipment_id INT PRIMARY KEY,
+    order_id INT NOT NULL,
+    address VARCHAR2(255) NOT NULL,
+    shipped_date DATE,
+    status VARCHAR2(30) DEFAULT 'Pending' NOT NULL CHECK (
+        status IN ('Pending', 'Shipped', 'In Transit', 'Delivered')
+    ),
+    CONSTRAINT fk_shipment_order FOREIGN KEY (order_id)
+        REFERENCES Orders(order_id)
+);
+
+/* بياناته */
+INSERT INTO Shipments VALUES (1, 1, 'Al Nakheel District, Riyadh', NULL, 'Pending');
+INSERT INTO Shipments VALUES (2, 2, 'Al Rawdah District, Jeddah', DATE '2026-11-07', 'Delivered');
+INSERT INTO Shipments VALUES (3, 3, 'Al Safra District, Buraydah', DATE '2026-11-09', 'Delivered');
+INSERT INTO Shipments VALUES (4, 4, 'Al Olaya District, Al Khobar', DATE '2026-11-11', 'In Transit');
+INSERT INTO Shipments VALUES (5, 5, 'Al Narjis District, Riyadh', DATE '2026-11-13', 'Shipped');
+
+SELECT * FROM Shipments;
